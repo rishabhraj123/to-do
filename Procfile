@@ -1,0 +1,1 @@
+web: gunicorn batch_management.wsgi --log-file - 
