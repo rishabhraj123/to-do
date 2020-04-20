@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}
+	Add heading
+{% endblock %}
+
+
+{% block content%}
+<div class="center-form">
+<form method="POST" action="{% url 'addheading' %}">
+    {% csrf_token %}
+    {{form.heading}}
+    <input class="btn btn-info" type="submit" name="Create Heading">
+ </form>
+</div>
+{% endblock %}

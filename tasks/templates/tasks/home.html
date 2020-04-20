@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}
+	All Tasks
+{% endblock %}
+
+
+{% block content%}
+{% if user.is_authenticated %}
+<div class="text-center">
+  <h2> Welcome {{ request.user|title }} </h2>
+  <a class="btn btn-info" href="{% url 'addheading' %}">Add New</a>
+</div>
+
+{% for heading,taskss in tasks.items %}
+<div class="center-column">
+  
+  <h3 align="center">{{heading.heading}}</h3>
+  <form method="POST" action="{% url 'addtask' heading.id %}">
+    {% csrf_token %}
+    {{form.title}}
+    <input class="btn btn-info" type="submit" name="Create Task">
+  </form>
+  {% for task in taskss %}
+  <div class="todo-list">
+      <div class="item-row">
+        {% if task.complete == True %}
+          <strike>{{task.title}}</strike>
+        {% else %}
+          <span>{{task.title}}</span>
+        {% endif %}
+        <br>
+        <a class="btn btn-sm btn-info" href="{% url 'update' task.id %}">Update</a>
+        <a class="btn btn-sm btn-danger" href="{% url 'delete' task.id %}">Delete</a>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endfor %}
+{% else %}
+<div class="text-center">
+<h2> Welcome..Please Login to continue </h2>
+</div>
+{% endif %}
+{% endblock %}
